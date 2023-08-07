@@ -50,7 +50,7 @@ class Aluno(Pessoa):
     # Abrir o arquivo em modo de adição
         with open(caminho, "a", encoding="utf-8") as arquivo :
         # Escrever os dados do aluno no arquivo
-            arquivo.write(f" Nome: {self.get_nome()}, Número Matrícula: {self.get_matricula()}, Curso: {serie} Turma: {sala}\n")
+            arquivo.write(f" Nome: {self.get_nome()}, Número Matrícula: {self.get_matricula()}, Curso: {sala} Turma: {serie}\n")
     
 
 class professor(Pessoa):

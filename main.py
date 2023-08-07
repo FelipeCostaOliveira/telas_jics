@@ -1,6 +1,7 @@
 from Equipe import *
 import cadastro
 import time
+from registro import *
 
 '''frase = "\033[3;0;97m\n        Avaliação Prática -  Programação Orientada a Objetos(POO)\n                   2º ANO - Informática - Matutino\n\n                            Grupo Valhalla\n\nDocente:\n -> Camila Serrão\n\nDiscentes:\n -> Deny Willian de Lima Martins\n -> Felipe Costa de Oliveira \n -> Renan Neponuceno Barroso\n -> Stefano Gabriel Mendonça de Oliveira\n"
 
@@ -21,10 +22,19 @@ while True:
       break
   elif quem == 2:
       cadastro.cadastro_professor()
-      print("\nProfessores cadastrados")
-      cadastro.exibir_professores_cadastrados()
       print("\nAlunos cadastrados: ")
-      cadastro.exibir_alunos_cadastrados()
+      
+      caminho_diretorio = os.getcwd()
+      for pasta, _, arquivos in os.walk(caminho_diretorio):
+        for arquivo in arquivos:
+            if arquivo == "professores_cadastrados.txt":
+              continue
+            if arquivo.endswith(".txt"):
+                caminho_arquivo = os.path.join(pasta, arquivo)
+                with open(caminho_arquivo, "r", encoding="utf-8") as arquivo_txt:
+                    conteudo = arquivo_txt.read()
+                    print(conteudo)
+      
       
       break
   print("\033[31mResposta inválida, digite 1 ou 2 \033[0;0m")

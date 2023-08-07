@@ -1,56 +1,10 @@
 from Equipe import *
+from registro import *
 import os
 
 
 
-def validar_matricula(matricula):
-    return matricula.isdigit() and len(matricula) >= 10
 
-def verificar_matricula_em_arquivos(caminho_diretorio, matricula):
-    for pasta, _, arquivos in os.walk(caminho_diretorio):
-        for arquivo in arquivos:
-            if arquivo.endswith(".txt"):
-                caminho_arquivo = os.path.join(pasta, arquivo)
-                with open(caminho_arquivo, "r", encoding="utf-8") as arquivo_txt:
-                    conteudo = arquivo_txt.read()
-                    for linha in conteudo.splitlines():
-                        if linha.strip() == "":
-                            break
-                        if matricula == linha.split(":")[2].replace(", Curso", "").strip():
-                            return True
-    return False
-
-
-
-def exibir_alunos_cadastrados(caminho):
-  # Abrir o arquivo em modo de leitura
-  with open(caminho, "r", encoding="utf-8") as arquivo:
-    # Ler as linhas do arquivo
-    linhas = arquivo.readlines()
-    # Imprimir os professores cadastrados
-    for linha in linhas:
-      # Remover a quebra de linha ao imprimir
-      print(linha.rstrip())  
-
-
-
-def exibir_professores_cadastrados():
-  # 
-  with open("professores_cadastrados.txt", "r", encoding="utf-8") as arquivo:
-     
-    linhas = arquivo.readlines()
-     
-    for linha in linhas:
-       
-      campos = linha.rstrip().split(",")
-      
-      nome = campos[0].split(":")[1].strip()
-       
-      matricula = campos[1].split(":")[1].strip()
-      
-      senha = campos[2].split(":")[1].strip()
-      # Imprimir as informações formatadas na tela
-      print(f"Nome: {nome}, Número de matrícula: {matricula}, Senha: {'*' * len(senha)}")
 
 #--------------FELIPE------------------#
 
@@ -61,14 +15,16 @@ def cadastro():
   while True:
     nome = input("Digite o nome do discente: ").capitalize()
     matricula = input("Digite a matrícula do discente: ")
+    
+    user = registro(nome, matricula)
 
-    while not validar_matricula(matricula):
+    while not user.validar_matricula(matricula, 10):
         print("\033[31mMatrícula inválida, digite apenas números com no mínimo 10 algarismos.\033[0m")
         matricula = input("Digite a matrícula do discente:\n ")
 
     diretorio_raiz = os.getcwd()
     while True:
-      if not verificar_matricula_em_arquivos(diretorio_raiz, matricula):
+      if not user.verificar_matricula_em_arquivos(diretorio_raiz, matricula):
         break
       print("\033[31mJá existe um aluno cadastrado com essa matrícula.\033[0m")
       matricula = input("Digite a matrícula do discente:\n ")
@@ -118,7 +74,7 @@ def cadastro():
       break
   print("\n\u001b[1m\033[032mCadastros Realizados na sua turma:\033[0m\n")
   caminho = os.path.join(sala, f"{serie}.txt")
-  exibir_alunos_cadastrados(caminho)
+  user.exibir_alunos_cadastrados(caminho)
 
 
 def cadastro_professor():
@@ -126,22 +82,27 @@ def cadastro_professor():
   nome = input("Digite seu nome: ").capitalize()
 
   matricula_prof = input("Digite seu número de matrícula: ")
+  user = registro(nome, matricula_prof)
+  while not user.validar_matricula(matricula_prof, 5):
+      print("\033[31mMatrícula inválida, digite apenas números com no mínimo 5 algarismos.\033[0m")
+      matricula_prof = input("Digite seu número de matrícula: \n ")
+
+  diretorio_raiz = os.getcwd()
   while True:
-    with open("alunos_cadastrados.txt", "r", encoding="utf-8") as arquivo:
-      linhas = arquivo.readlines()
-      for linha in linhas:
-        if linha.strip() == "":
-          break
-        if matricula_prof == linha.split(":")[2].replace(", Senha", "").strip():
-          print("\033[31mJá existe um aluno cadastrado com essa matrícula.\033[0m")
-          matricula_prof = input("Digite seu número de matrícula: ")
-          break
-
-      else:
-        # Se não houver matrícula repetida, sair do loop
+      if not user.verificar_matricula_em_arquivos(diretorio_raiz, "professores_cadastrados.txt"):
         break
-
+      print("\033[31mJá existe um professor cadastrado com essa matrícula.\033[0m")
+      matricula = input("Digite seu número de matrícula: \n ")
+      
   senha = input("Digite sua senha: ")
   servidor = professor(nome, matricula_prof, senha)
   prof.append(servidor)
   servidor.cad_professor(senha)
+  print("\nProfessores cadastrados")
+
+  user.exibir_professores_cadastrados()
+
+
+
+                
+    
