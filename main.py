@@ -11,8 +11,7 @@ for i in frase:
   time.sleep(0.000001)
   print(i,end='', flush=True)
 print()'''
-diretório_raiz = os.getcwd()
-print(f'este é o diretório raiz{diretório_raiz}')
+
 print("Quem deseja acessar?")
 while True:
   quem = int(input("1 - Aluno que irá cadastrar\n2 - Professores\n"))
@@ -34,11 +33,16 @@ while True:
                 caminho_arquivo = os.path.join(pasta, arquivo)
                 with open(caminho_arquivo, "r", encoding="utf-8") as arquivo_txt:
                     conteudo = arquivo_txt.read()
-                    print(conteudo)
+                    lines = conteudo.splitlines()
+                    for linha in lines:
+                      parte = linha.split(", Curso")
+                      parte_mantida = parte[0]
+                      print(parte_mantida)
       break
-    
+  #elif exclusivo para teste
   elif quem == 3:
     caminho_raiz = os.getcwd()
-    equipes(caminho_raiz)
+    tamanho = 2
+    equipes(caminho_raiz, tamanho)
     break
   print("\033[31mResposta inválida, digite 1 ou 2 \033[0;0m")
