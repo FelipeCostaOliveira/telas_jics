@@ -2,6 +2,7 @@ from Equipe import *
 import cadastro
 import time
 from registro import *
+from gerar_chaveamento import equipes
 
 '''frase = "\033[3;0;97m\n        Avaliação Prática -  Programação Orientada a Objetos(POO)\n                   2º ANO - Informática - Matutino\n\n                            Grupo Valhalla\n\nDocente:\n -> Camila Serrão\n\nDiscentes:\n -> Deny Willian de Lima Martins\n -> Felipe Costa de Oliveira \n -> Renan Neponuceno Barroso\n -> Stefano Gabriel Mendonça de Oliveira\n"
 
@@ -34,7 +35,10 @@ while True:
                 with open(caminho_arquivo, "r", encoding="utf-8") as arquivo_txt:
                     conteudo = arquivo_txt.read()
                     print(conteudo)
-      
-      
       break
+    
+  elif quem == 3:
+    caminho_raiz = os.getcwd()
+    equipes(caminho_raiz)
+    break
   print("\033[31mResposta inválida, digite 1 ou 2 \033[0;0m")

@@ -2,14 +2,6 @@ from Equipe import *
 from registro import *
 import os
 
-
-
-
-
-#--------------FELIPE------------------#
-
-
-# Cadastrar um aluno
 def cadastro():
  
   while True:
@@ -101,8 +93,3 @@ def cadastro_professor():
   print("\nProfessores cadastrados")
 
   user.exibir_professores_cadastrados()
-
-
-
-                
-    
