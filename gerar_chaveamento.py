@@ -1,7 +1,8 @@
 import os
 import random
-def equipes(caminho, tam_time):
-    equipes_cadastradas =[]
+
+def equipes(caminho, tam_chave):
+    equipes_cadastradas = []
     for pasta, _, arquivos in os.walk(caminho):
         for arquivo in arquivos:
             if arquivo == "professores_cadastrados.txt":
@@ -17,11 +18,14 @@ def equipes(caminho, tam_time):
                             indice_curso = palavras.index("Curso:")
                             curso = palavras[indice_curso + 1]
                             turma = palavras[indice_curso + 3]
-                            Equipe= f"{curso} {turma}"
+                            Equipe = f"{curso} {turma}"
                             equipes_cadastradas.append(Equipe)
     random.shuffle(equipes_cadastradas)
     num_equipes = len(equipes_cadastradas)
     
-    for i in range(0, num_equipes, tam_time):
-        print(f"Time {i // tam_time + 1}: {equipes_cadastradas[i:i+tam_time]}")
-    
+    with open("chaves.txt", "w", encoding="utf-8") as chvs:
+        for i in range(0, num_equipes, tam_chave):
+            chave = f"Chave {i // tam_chave + 1}: {' | '.join(equipes_cadastradas[i:i+tam_chave])}\n"
+            chvs.write(chave)
+
+
