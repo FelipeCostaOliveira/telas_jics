@@ -1,4 +1,4 @@
-from Equipe import *
+from Classes import *
 from registro import *
 import os
 

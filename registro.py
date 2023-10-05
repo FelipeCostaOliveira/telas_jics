@@ -21,8 +21,6 @@ class registro:
                                 return True
         return False
 
-
-
     def exibir_alunos_cadastrados(self, caminho):
     # Abrir o arquivo em modo de leitura
         with open(caminho, "r", encoding="utf-8") as arquivo:

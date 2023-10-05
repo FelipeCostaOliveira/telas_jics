@@ -1,4 +1,5 @@
 import os, sys
+import random
 # --------------RENAN / DENY---------------------#
 class Pessoa:
     def __init__(self, nome, matricula):
@@ -67,31 +68,40 @@ class professor(Pessoa):
         # Escrever os dados do professor no arquivo
         arquivo.write(f" Nome: {self.get_nome()}, Número Matrícula: {self.get_matricula()}, Senha: {senha}\n")
 
-class equipe:
-    def __init__(self, jogadores):
-        self.jogadores = jogadores
-        self.qtde_jogadores = len(jogadores)
-    def gerar_equipe(self):
-        pass
-
-class gerenciar_cadastro_aluno(Aluno):
-    def __init__(self, nome, curso, turma):
-        super().__init__(nome, curso, turma)
-
-    def editar_aluno(self):
-        pass
-    def excluir_aluno(self):
-        pass
-    def exibir_edicoes(self):
-        pass
-
 class chave:
-    def __init__(self, equipe):
-        pass
-    def gerar_chaveamento(self):
-        pass
+    def __init__(self, equipe, tam_chave):
+        self.caminho = equipe
+        self.tam_chave = tam_chave
+        
+    def gerar_chave(self):
+        equipes_cadastradas = []
+        for pasta, _, arquivos in os.walk(self.caminho):
+            for arquivo in arquivos:
+                if arquivo == "professores_cadastrados.txt":
+                    continue
+                if arquivo.endswith(".txt"):
+                    caminho_arquivo = os.path.join(pasta, arquivo)
+                    with open(caminho_arquivo, "r", encoding="utf-8") as arq_txt:
+                        conteudo = arq_txt.read()
+                        linhas = conteudo.splitlines()
+                        for linha in linhas:
+                            if "Curso:" in linha:
+                                palavras = linha.split()  # Dividir a linha em palavras
+                                indice_curso = palavras.index("Curso:")
+                                curso = palavras[indice_curso + 1]
+                                turma = palavras[indice_curso + 3]
+                                Equipe = f"{curso} {turma}"
+                                equipes_cadastradas.append(Equipe)
+        random.shuffle(equipes_cadastradas)
+        num_equipes = len(equipes_cadastradas)
+        
+        with open("chaves.txt", "w", encoding="utf-8") as chvs:
+            for i in range(0, num_equipes, self.tam_chave):
+                chave = f"Chave {i // self.tam_chave + 1}: {' | '.join(equipes_cadastradas[i:i+self.tam_chave])}\n"
+                chvs.write(chave)
+                print(chave)
 
-class jogos:
+class jogos(chave):
     def __init__(self, chave, hora_inicio, hora_fim, data):
         self.chave = chave
         self.hora_inicio = hora_inicio
@@ -99,8 +109,25 @@ class jogos:
         self.data = data
     def gerar_jogos(self):
         pass
-    def sortear_jogos(self):
-        pass
+    
     def exibir_jogos(self):
         pass
+
+
+class gerenciar_cadastro_aluno(Aluno):
+    def __init__(self, nome, curso, turma):
+        super().__init__(nome, curso, turma)
+
+    def editar_aluno(self, novo_nome, novo_curso, nova_turma):
+        self.set_nome(novo_nome)
+        self.curso = novo_curso  # Note que 'curso' é um atributo público
+        self.set_turma(nova_turma)
+    def excluir_aluno(self):
+        pass
+    def exibir_edicoes(self):
+        pass
+
+
+
+
 

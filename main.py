@@ -1,4 +1,4 @@
-from Equipe import *
+from Classes import *
 import cadastro
 import time
 from registro import *
@@ -43,6 +43,7 @@ while True:
   elif quem == 3:
     caminho_raiz = os.getcwd()
     tamanho = 2
-    equipes(caminho_raiz, tamanho)
+    sistem = chave(caminho_raiz, tamanho)
+    sistem.gerar_chave()
     break
   print("\033[31mResposta inválida, digite 1 ou 2 \033[0;0m")
