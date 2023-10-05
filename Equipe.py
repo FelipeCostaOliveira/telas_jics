@@ -66,3 +66,41 @@ class professor(Pessoa):
       with open("professores_cadastrados.txt", "a", encoding="utf-8") as arquivo :
         # Escrever os dados do professor no arquivo
         arquivo.write(f" Nome: {self.get_nome()}, Número Matrícula: {self.get_matricula()}, Senha: {senha}\n")
+
+class equipe:
+    def __init__(self, jogadores):
+        self.jogadores = jogadores
+        self.qtde_jogadores = len(jogadores)
+    def gerar_equipe(self):
+        pass
+
+class gerenciar_cadastro_aluno(Aluno):
+    def __init__(self, nome, curso, turma):
+        super().__init__(nome, curso, turma)
+
+    def editar_aluno(self):
+        pass
+    def excluir_aluno(self):
+        pass
+    def exibir_edicoes(self):
+        pass
+
+class chave:
+    def __init__(self, equipe):
+        pass
+    def gerar_chaveamento(self):
+        pass
+
+class jogos:
+    def __init__(self, chave, hora_inicio, hora_fim, data):
+        self.chave = chave
+        self.hora_inicio = hora_inicio
+        self.hora_fim = hora_fim
+        self.data = data
+    def gerar_jogos(self):
+        pass
+    def sortear_jogos(self):
+        pass
+    def exibir_jogos(self):
+        pass
+
